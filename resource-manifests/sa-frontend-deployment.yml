@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name:  sa-frontend
+spec:
+  replicas: 2
+  minReadySeconds: 20
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app:  sa-frontend
+    spec:
+      containers:
+      - image:  rinormaloku/sentiment-analysis-frontend:green
+        name:  sa-frontend
+        ports:
+        - containerPort:  80
+        imagePullPolicy: Always
